@@ -1,0 +1,174 @@
+/* sticky footer */
+* {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  background-size: cover;
+}
+#body_index{
+  background-image:url('../images/coffee_background5.jpg');
+}
+#body_QRcodeScanner{
+  background-image:url('../images/coffee_background4-4K.png');
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 2.1rem;
+}
+
+li {
+  text-align: center;
+  background-color: #c27314
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 50px;
+  text-decoration: none;
+  position:relative;
+}
+
+li  {
+  text-shadow: 2px 2px 5px#111;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -5em;
+}
+
+.footer {
+  height: 5em;
+  color: rgba(255,255,255,0.8);
+  background-color: #c27314;
+}
+.push {
+  height: 5em;
+  color: rgba(255,255,255,0.8);}
+
+/* center footer */
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#footer{
+  font-size:20px;
+}
+#footer a:hover:not(.active){
+  text-shadow: 2px 2px 5px#111;}
+.flex-item {
+  text-align: center;
+}
+#contain{
+  margin-top:5%;
+}
+/* images */
+#card-item-container {
+  visibility: hidden;
+}
+
+#image-container {
+  position: relative;
+  padding: 10px;
+}
+
+#show-img {
+  max-width: 100%;
+}
+
+.face-frame {
+  border: 2px solid #ff0000;
+  position: absolute;
+}
+
+.canvas-face {
+  display: none;
+}
+.chart-result-profile canvas {
+  border-radius: 50px;
+}
+
+#head-container {
+  font-size: 2.1rem;
+}
+
+#webcam {
+  width: 100%;
+    
+}
+#canvas_webcam {
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+#webcam_frame {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid #ff0000;
+}
+#btn-share {
+  display: none;
+}
+#btn-manual {
+  display: none;
+}
+.cropper-modal {
+  opacity: 0.05;
+}
+#main-container {
+  font-family: Roboto, sans-serif;
+}
+#show_Price{
+  color:#ffffff;
+  font-size:46px;
+}
+#price{
+  color:#ffffff;text-decoration:underline;
+}
+#show_point{
+  color:#ffffff;
+  font-size:46px;
+  text-shadow: 2px 2px 10px#111;
+  text-align: center;
+}
+#point_div{
+  margin-top: 300px;
+}
+
+#success{
+  color:#f00000;
+  font-size:46px;
+  text-shadow: 2px 2px 10px#111;
+}
+#QRcode_prompt{
+  font-size:23px;
+  text-align: center;
+  color:#ffffff;
+  text-shadow: 2px 2px 10px#111;
+}
+@media only screen and (max-width: 992px) {
+  #head-container {
+    text-align: center;
+    font-size: 1.8rem;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  #head-container {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}

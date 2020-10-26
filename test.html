@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Js彈出浮動視窗，支援滑鼠拖動和關閉</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+/**
+關於一些引數說明：
+*bodycontent:要在視窗顯示的內容，dom物件
+*title:視窗標題，字串型別
+*removeable:視窗能否拖動，布林型別
+*注意：內容窗體的高度是height-30px，請計算好你要顯示的內容的高度和寬度。彈出窗的id為"223238909"，所以你的頁面不要再取值為"223238909"的id了，以防js執行出錯*/
+function createdialog(width,height,bodycontent,title,removeable){
+    if(document.getElementById("223238909")==null){
+        /*建立視窗的組成元素*/
+        var dialog = document.createElement("div");
+        var dialogtitlebar= document.createElement("div");
+        var dialogbody = document.createElement("div");
+        var dialogtitleimg = document.createElement("span");
+        var dialogtitle = document.createElement("span");
+        var dialogclose = document.createElement("span");
+        var closeaction = document.createElement("button");
+        /*為視窗設定一個id，id如此怪異是為了儘量避免與其他使用者取的id相同而出錯*/
+        dialog.id = "223238909";
+        /*組裝對話方塊標題欄,按從裡到外的順序組裝*/
+        dialogtitle.innerHTML = title;
+        dialogtitlebar.appendChild(dialogtitleimg);
+        dialogtitlebar.appendChild(dialogtitle);
+        dialogtitlebar.appendChild(dialogclose);
+        dialogclose.appendChild(closeaction);
+        /*組裝對話方塊主體內容*/
+    if(bodycontent[0]!=null){
+        bodycontent[0].style.display ="block";
+        dialogbody.appendChild(bodycontent);
+    }
+    /*組裝成完整的對話方塊*/
+    dialog.appendChild(dialogtitlebar);
+    dialog.appendChild(dialogbody);
+    /*設定視窗組成元素的樣式*/
+    var templeft,temptop,tempheight//視窗的位置（將視窗放在頁面中間的輔助變數）
+    var dialogcssText,dialogbodycssText;//拼出dialog和dialogbody的樣式字串
+    templeft = (document.body.clientWidth-width)/2;
+    temptop = (document.body.clientHeight-height)/2;
+    tempheight= height-30;
+    dialogcssText= "position:absolute;background:#65c294;padding:1px;border:4px;top:"+temptop+"px;left:"+templeft+"px;height:"+height+"px;width:"+width+"px;";
+    dialogbodycssText = "width:100%;background:#ffffff;"+"height:"+tempheight+"px;";
+    dialog.style.cssText = dialogcssText;
+    dialogtitlebar.style.cssText = "height:30px;width:100%;background:url(images/titlebar.png) repeat;cursor:move;";
+    dialogbody.style.cssText  = dialogbodycssText;
+    dialogtitleimg.style.cssText = "float:left;height:20px;width:20px;background:url(images/40.gif);"+"display:block;margin:4px;line-height:20px;";
+    dialogtitle.style.cssText = "font-size:16px;float:left;display:block;margin:4px;line-height:20px;";
+    dialogclose.style.cssText  = "float:right;display:block;margin:4px;line-height:20px;";
+    closeaction.style.cssText = "height:20px;width:24px;border-width:1px;"+"background-image:url(images/close.png);cursor:pointer;";
+    /*為視窗元素註冊事件*/
+    var dialogleft = parseInt(dialog.style.left);
+    var dialogtop = parseInt(dialog.style.top);
+    var ismousedown = false;//標誌滑鼠是否按下
+    /*關閉按鈕的事件*/       
+    closeaction.onclick = function(){
+    dialog.parentNode.removeChild(dialog);
+    }
+    /*實現視窗的移動，這段程式碼很典型，網上很多類似的程式碼*/
+    if(removeable == true){
+        var ismousedown = false;
+        var dialogleft,dialogtop;
+        var downX,downY;
+        dialogleft = parseInt(dialog.style.left);
+        dialogtop = parseInt(dialog.style.top);
+        dialogtitlebar.onmousedown = function(e){
+        ismousedown = true;
+        downX = e.clientX;
+        downY = e.clientY;
+    }
+    document.onmousemove = function(e){
+    if(ismousedown){
+        dialog.style.top = e.clientY - downY+dialogtop+"px";
+        dialog.style.left = e.clientX - downX+dialogleft+"px";
+    }
+    }
+    /*鬆開滑鼠時要重新計算當前視窗的位置*/
+    document.onmouseup = function(){
+    dialogleft = parseInt(dialog.style.left);
+    dialogtop = parseInt(dialog.style.top);
+    ismousedown = false;
+    }
+    }
+    return dialog; 
+    }//end if(if的結束)
+    }
+</script>
+<style>
+table{background:#b2d235;}
+button{font-size:12px;height:23;background:#ece9d8;border-width:1;}
+#linkurl,#linkname,#savelink{width:100px;}
+</style>
+</head>
+<body>
+<!-- 顯示視窗的地方 -->
+<div id="here"></div><a id="clickhere" href="#">點選生成視窗</a>
+<!-- 要嵌入到視窗的內容 -->
+<div id="login" style="display:none;">
+    <form action="#" method="post" onSubmit="return false;">
+        <table width="400" height="95">
+        <tr>
+            <td width="78">連結文字</td>
+            <td width="168"><input name="link.name" type="text"/></td>
+            <td width="138" id="linktext"></td>
+        </tr>
+        <tr>
+            <td>連結地址</td>
+            <td><input name="link.url" type="text"/></td>
+            <td id="linkurl"></td>
+        </tr>
+        <tr>
+        <td></td>
+            <td><button type="submit" style="float:right;">新增</button></td>
+            <td id="savelink"></td>
+        </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    var here = document.getElementById("here");
+    var login = document.getElementById("login");
+    var clickhere = document.getElementById("clickhere");
+    clickhere.onclick = function(){
+    here.appendChild(createdialog(400,95,30,login,"歡迎光臨指令碼之家",true));
+    }
+</script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+</body>
+</html>

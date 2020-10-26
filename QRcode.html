@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--UI-->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        <!--Local-->
+        <script src="js/jquery.qrcode.min.js"></script>
+        <script src='js/QRcodeToSQL.js'></script>
+    </head>
+    <script>
+        $( document ).ready(function() {
+            QRcodeGenerate();
+        });
+        function _uuid() {
+        var d = Date.now();
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+            d += performance.now(); //use high-precision timer if available
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        }
+        function QRcodeGenerate(){
+        code=_uuid();
+        ToSQL_SaveNewCode(code);
+        $('#qrcode').qrcode({
+        width: 512,
+        height: 512,
+        text: code
+        });
+    }
+    </script>
+    <body>
+        <div id='qrcode'></div>
+    </body>
+</html>
